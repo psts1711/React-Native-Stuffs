@@ -1,0 +1,43 @@
+  setShowLoader(true);
+        const confirmationResult = await auth().signInWithPhoneNumber('+91'+mobileNumber);
+        if(confirmationResult._auth._authResult)
+        {
+          // @ts-ignore
+          viewShotRef.current.showMessage({
+            message: "OTP send on your mobile number, you will received shortly",
+            description:'Successfully',
+            icon:'success',
+            //type: "info",
+            backgroundColor: "green", // background color
+            color: "white", // text color
+          });
+          navigation.navigate(SignUpRegister.name, {confirmationResult:confirmationResult, data: mobileNumber});
+         // navigation.navigate(SignUpRegister.name, {data:'+91'+mobileNumber});
+        }else{
+          // @ts-ignore
+          viewShotRef.current.showMessage({
+            message: "Something went wrong. Please try again later!",
+            icon:'info',
+            backgroundColor: "orange",
+            color: "white",
+            titleStyle: {  fontSize: 16, marginTop: 2 }
+          });
+        }
+        
+        
+        
+          const [confirm, setConfirm] = useState(null);
+  useEffect(() => {
+    confirmationResult();
+  }, []);
+
+   const confirmationResult=async()=>{
+    try{
+      let confirmationResult = await route.params.confirmationResult;
+      setConfirm(confirmationResult);
+    }catch(e){
+      alert(JSON.stringify(e));
+    }
+  };
+
+        
